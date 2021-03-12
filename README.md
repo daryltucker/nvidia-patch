@@ -125,6 +125,23 @@ If something got broken you may restore patched driver from backup:
 bash ./patch.sh -r
 ```
 
+## DKMS Support
+
+After cloning the repository:
+
+```bash
+sudo cp -r nvidia-patch /usr/src/nvidia-patch-0.1
+cd /usr/src/nvidia-patch-0.1
+sudo dkms add -m nvidia-patch -v 0.1
+sudo dkms build -m nvidia-patch -v 0.1
+sudo dkms install -m nvidia-patch -v 0.1
+```
+
+DKMS is designed to create a kernel module.
+A fake `nvidia-patch.ko` is created during build to satisfy `dkms`, but it is never loaded.
+The result is the patch being applied during each kernel upgrade.
+
+
 ## Docker support
 
 It is possible to use this patch with nvidia-docker containers, even if host machine hasn't patched drivers. See `Dockerfile` for example.
@@ -142,7 +159,7 @@ Essentially all you need to do during build is:
 
 ## See also
 
-* Plex Media Server: enable HW **decoding**: 
+* Plex Media Server: enable HW **decoding**:
   * [GH Issue](https://github.com/keylase/nvidia-patch/issues/51)
   * PMS Forum:
     1. [https://forums.plex.tv/t/hardware-accelerated-decode-nvidia-for-linux/233510/158](https://forums.plex.tv/t/hardware-accelerated-decode-nvidia-for-linux/233510/158)
